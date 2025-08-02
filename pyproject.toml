@@ -1,6 +1,8 @@
 [project]
 name = "pydc-auth"
-authors = "Makarand Bhonsle"
+authors = [
+    {name="Makarand Bhonsle"}
+]
 version = "0.1.0"
 description = "JWT Beaer Auth client for generating Salesforce Data Cloud Bearer Access Token"
 readme = "README.md"
@@ -12,3 +14,7 @@ dependencies = [
     "cryptography>=41.0.0",
     "tenacity>=9.0.0"
 ]
+
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
