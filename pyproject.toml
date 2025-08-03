@@ -4,7 +4,7 @@ authors = [
     {name="Makarand Bhonsle"}
 ]
 version = "0.1.0"
-description = "JWT Beaer Auth client for generating Salesforce Data Cloud Bearer Access Token"
+description = "JWT Bearer Auth client for generating Salesforce Data Cloud Bearer Access Token"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -12,9 +12,15 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "PyJWT>=2.8.0",
     "cryptography>=41.0.0",
+<<<<<<< Updated upstream
     "tenacity>=9.0.0"
 ]
 
 [build-system]
 requires = ["setuptools>=80.9.0"]
 build-backend = "setuptools.build_meta"
+=======
+    "tenacity>=9.0.0",
+    "python-dotenv>=1.0.0"
+]
+>>>>>>> Stashed changes
