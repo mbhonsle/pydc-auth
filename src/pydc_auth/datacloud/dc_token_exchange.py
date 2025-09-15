@@ -6,7 +6,7 @@ import os
 import httpx
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from src.sfauth.sf_token_exchange import SalesforceTokenGenerator
+from ..sfauth.sf_token_exchange import SalesforceTokenGenerator
 
 DC_TOKEN_ENDPOINT = '/services/a360/token'
 

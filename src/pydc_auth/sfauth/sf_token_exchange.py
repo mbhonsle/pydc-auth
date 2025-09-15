@@ -22,7 +22,7 @@ from tenacity import (
     before_sleep_log,
     after_log
 )
-from src.sfauth.jwt_token_creator import SalesforceJWTTokenCreator
+from .jwt_token_creator import SalesforceJWTTokenCreator
 
 TOKEN_ENDPOINT = '/services/oauth2/token'
 DEFAULT_SF_GRANT_TYPE = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
