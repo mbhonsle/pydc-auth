@@ -26,7 +26,6 @@ class SalesforceJWTTokenCreator:
 
     def __init__(self, load_env: bool = True):
         """
-
         :param load_env:
         """
         if load_env:
@@ -110,7 +109,7 @@ class SalesforceJWTTokenCreator:
 
             return private_key
         except Exception as e:
-            raise Exception(f"Error loading private key: {self.private_key_path}")
+            raise Exception(f"Error {e} loading private key: {self.private_key_path}")
 
 
     def _token_valid(self) -> bool:
