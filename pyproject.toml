@@ -32,7 +32,7 @@ classifiers = [
 ]
 
 [build-system]
-requires = ["setuptools>=75.7.0", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]

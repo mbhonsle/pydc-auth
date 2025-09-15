@@ -3,8 +3,8 @@ name: Build & Publish
 on:
   push:
     tags:
-      - "v*.*.*"
-      - "test-v*.*.*"
+      - "v*.*.*"        # PyPI
+      - "test-v*.*.*"   # TestPyPI
   workflow_dispatch:
 
 jobs:
@@ -13,27 +13,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Debug event context
-        run: |
-          echo "event=${{ github.event_name }}"
-          echo "ref=${{ github.ref }}"
-          echo "ref_name=${{ github.ref_name }}"
-          echo "ref_type=${{ github.ref_type }}"
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install build tools
+      - name: Upgrade build & upload toolchain (PEP 639-aware)
         run: |
           python -m pip install --upgrade pip
-          pip install build twine
+          pip install --upgrade "setuptools>=77.0.0" wheel build \
+                                "twine>=5.1.1" "pkginfo>=1.10.0" "packaging>=24.2"
+          python -c "import setuptools, pkginfo, packaging, sys; print('setuptools', setuptools.__version__, 'pkginfo', pkginfo.__version__, 'packaging', packaging.__version__)"
 
       - name: Build sdist & wheel
         run: |
           rm -rf dist build *.egg-info
           python -m build
+
+      - name: Check metadata (twine check)
+        run: |
+          twine check dist/*
+
+      - name: Show license headers in METADATA (debug)
+        run: |
+          python - <<'PY'
+          import glob, zipfile
+          for whl in glob.glob('dist/*.whl'):
+              with zipfile.ZipFile(whl) as z:
+                  for n in z.namelist():
+                      if n.endswith('METADATA'):
+                          m = z.read(n).decode('utf-8', 'replace')
+                          print("\n===", whl, "===\n")
+                          for line in m.splitlines():
+                              if line.startswith(("Metadata-Version", "License", "License-")):
+                                  print(line)
+          PY
 
       - name: Upload dist artifacts
         uses: actions/upload-artifact@v4
@@ -55,8 +69,7 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
-          python -m pip install --upgrade pip
-          pip install twine
+          python -m pip install --upgrade pip "twine>=5.1.1" "pkginfo>=1.10.0" "packaging>=24.2"
           twine upload dist/*
 
   publish-testpypi:
@@ -73,6 +86,5 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
         run: |
-          python -m pip install --upgrade pip
-          pip install twine
+          python -m pip install --upgrade pip "twine>=5.1.1" "pkginfo>=1.10.0" "packaging>=24.2"
           twine upload --repository-url https://test.pypi.org/legacy/ dist/*
