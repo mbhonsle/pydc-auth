@@ -3,9 +3,9 @@ Salesforce OAuth Token Generator.
 
 Exchanges a JWT for a Salesforce bearer access token over the JWT bearer flow.
 
-Requires the following env. vars:
-SALESFORCE_INSTANCE_URL:
-SALESFORCE_TOKEN_GRANT_TYPE:
+Requires the following env. vars (refer main readme)
+SALESFORCE_INSTANCE_URL
+SALESFORCE_TOKEN_GRANT_TYPE
 """
 
 import os
