@@ -74,7 +74,7 @@ class SalesforceJWTTokenCreator:
             token = jwt.encode(
                 payload=payload,
                 key=self.private_key,
-                algorithm='RS356'
+                algorithm='RS256'
             )
             self.token = token
             return token
@@ -84,7 +84,7 @@ class SalesforceJWTTokenCreator:
     def _validate_env_vars(self):
         requires_vars = {
             'SALESFORCE_APP_SUBJECT': self.app_subject,
-            'SALESFORCE_APP_PRIVATE_KEY': self.private_key,
+            'SALESFORCE_APP_PRIVATE_KEY': self.private_key_path,
             'SALESFORCE_APP_CONSUMER_KEY': self.consumer_key,
             'SALESFORCE_ORGANIZATION_ID': self.organization_id
         }
